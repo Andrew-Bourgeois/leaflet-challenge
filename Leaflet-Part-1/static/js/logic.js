@@ -22,6 +22,31 @@ d3.json(queryUrl).then(function (data) {
     createFeatures(data.features);
 });
 
+// create function to choose color for circle
+function chooseColor(depth) {
+  let color = "";
+  if (depth >= 90) {
+      color = "#fc4653";
+  }
+  else if (depth >= 70) {
+      color = "#f9914b";
+  }
+  else if (depth >= 50) {
+      color = "#faa921";
+  }
+  else if (depth >= 30) {
+      color = "#f4d612";
+  }
+  else if (depth >= 10) {
+      color = "#d5f70a";
+  }
+  else {
+      color = "#96f909";
+  }
+
+  return color;
+};
+
 // create the function createFeatures()
 function createFeatures(earthquakeData) {
 
@@ -30,28 +55,12 @@ function createFeatures(earthquakeData) {
     let earthquake = earthquakeData[i];
     let geo = earthquake.geometry;
     let location = [geo.coordinates[1], geo.coordinates[0]];
+    let depth = geo.coordinates[2];
 
     // conditionals for feature marker color
-    let color = "";
-    if (geo.coordinates[2] >= 90) {
-        color = "#fc4653";
-    }
-    else if (geo.coordinates[2] >= 70) {
-        color = "#f9914b";
-    }
-    else if (geo.coordinates[2] >= 50) {
-        color = "#faa921";
-    }
-    else if (geo.coordinates[2] >= 30) {
-        color = "#f4d612";
-    }
-    else if (geo.coordinates[2] >= 10) {
-        color = "#d5f70a";
-    }
-    else {
-        color = "#96f909";
-    }
-
+    // NOTE: used the MAC Digital Color Meter to obtain correct RGB color from example, and then converted to hex
+    let color = chooseColor(depth);
+ 
     //add circles to the map
     L.circle(location, {
       fillColor: color,
@@ -60,10 +69,8 @@ function createFeatures(earthquakeData) {
         weight: 0.5,
         //adjust radius,
         radius: (earthquake.properties.mag) * 20000
-    }).bindPopup(`<h3>${earthquake.properties.place}</h3><hr><p>Magnitude: ${earthquake.properties.mag}</p><p>Depth: ${geo.coordinates[2]} km</p>`).addTo(myMap); 
+    }).bindPopup(`<h3>${earthquake.properties.place}</h3><hr><p>Magnitude: ${earthquake.properties.mag}</p><p>Depth: ${depth} km</p>`).addTo(myMap); 
   };
-
-
 };
 
 // Create the base layers.
@@ -95,6 +102,7 @@ let myMap = L.map("map", {
   layers: [street]
 });
 
+
 // Create a layer control.
 // Pass it our baseMaps and overlayMaps.
 // Add the layer control to the map.
@@ -105,7 +113,6 @@ L.control.layers(baseMaps).addTo(myMap);
 let color_legend = L.control({
   position: "bottomright"
 });
-
 
 
 // use .onAdd() methond to add the color_legend to the map
