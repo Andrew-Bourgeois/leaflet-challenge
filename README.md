@@ -5,9 +5,11 @@ UNC-CH_DA - Module 15 Challenge - leaflet-challenge
 
 ## **INSTRUCTIONS**
 
-* To visit the deployed app for Part 1 in GitHub Pages:
+* To run the code clone the repository to your local machine
+* Navigate to the leaflet-challenge/Leaflet-Part-1/ folder: Here you will find the index.html for Part 1.
+* The style.css and logic.js files are found within the corresponding folders within the static folder.
 * Currenlty as of (02 OCT 2023, 14:00ET) only Part 1 is fully completed, Part 2 will be completed as time permits.
-* The code for PArt 1 can be found in the folder marked Leaflet Part 1
+* The code for Part 1 can be found in the folder marked Leaflet Part 1
 
 ## **ADDITIONAL CHALLENGE**
 
