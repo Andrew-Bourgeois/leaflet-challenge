@@ -14,13 +14,23 @@
     "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 */
 
+// query url for earthquakes
 queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+// url for plate boundaries
+urlPlates = "https://github.com/fraxen/tectonicplates/blob/master/GeoJSON/PB2002_boundaries.json"
+
 
 // Perform a GET request to the queryUrl/
 d3.json(queryUrl).then(function (data) {
     // createFeatures function on data.features object from the response
     createFeatures(data.features);
 });
+
+// Perform a GET request to the urlPlates
+d3.json(urlPlates).then(function (plateData) {
+  // create layer for plate lines
+  createPlateBoundaryFeatures(plateData);
+})
 
 // create function to choose color for circle
 function chooseColor(depth) {
